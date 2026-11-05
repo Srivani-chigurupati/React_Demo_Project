@@ -1,8 +1,10 @@
 import React from "react";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useSearchParams } from "react-router-dom";
 import ProductGrid from "../Components/ProductGrid";
 
 const Products = () => {
+  const [searchParams] = useSearchParams();
+  const selectedCategory = searchParams.get("category");
   const {
     products,
     cart,
@@ -15,13 +17,26 @@ const Products = () => {
     incrementCartQuantity,
     decrementCartQuantity,
   } = useOutletContext();
+  const visibleProducts = selectedCategory
+    ? products.filter((product) => product.category === selectedCategory)
+    : products;
+  const heading = selectedCategory
+    ? selectedCategory
+        .split("-")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ")
+    : "All Products";
 
   return (
-    <div>
+    <main className="products-page">
+      <h1>{heading}</h1>
       {loading && <p>Loading products...</p>}
       {error && <p role="alert">{error}</p>}
+      {!loading && !error && visibleProducts.length === 0 && (
+        <p>No products found in this category.</p>
+      )}
       <ProductGrid
-        products={products}
+        products={visibleProducts}
         cart={cart}
         wishlist={wishlist}
         onToggleWishlist={toggleWishlist}
@@ -30,7 +45,7 @@ const Products = () => {
         onIncrementCartQuantity={incrementCartQuantity}
         onDecrementCartQuantity={decrementCartQuantity}
       />
-    </div>
+    </main>
   );
 };
 

@@ -32,16 +32,16 @@ function App() {
       ),
       children: [
         {
-          index: true,
-          element: <Home />,
-        },
-        {
           path: "about",
           element: <About />,
         },
         {
           element: <ProductLayout />,
           children: [
+            {
+              index: true,
+              element: <Home />,
+            },
             {
               path: "products",
               element: <Products />,

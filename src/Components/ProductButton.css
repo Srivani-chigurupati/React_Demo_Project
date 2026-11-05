@@ -1,0 +1,53 @@
+.product-button {
+  margin: 8px 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.product-button:hover {
+  color: #8426cc;
+}
+
+.product-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.product-actions,
+.quantity-control {
+  display: inline-flex;
+  align-items: center;
+}
+
+.product-actions {
+  flex-wrap: wrap;
+}
+
+.quantity-control {
+  gap: 8px;
+  margin: 8px;
+}
+
+.quantity-button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--text-h);
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.quantity-button:hover {
+  color: #8426cc;
+}
+
+.quantity-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}

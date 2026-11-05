@@ -1,0 +1,25 @@
+.wishlist-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #e5e4e7;
+  border-radius: 50%;
+  background: white;
+  color: #6b6375;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.wishlist-icon:hover,
+.wishlist-icon.is-wishlisted {
+  color: #d9366e;
+}
+
+.wishlist-icon:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

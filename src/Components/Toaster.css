@@ -1,0 +1,14 @@
+.toast-message {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  max-width: min(360px, calc(100vw - 40px));
+  padding: 12px 16px;
+  border: 1px solid #218838;
+  border-radius: 6px;
+  background: #28a745;
+  color: #fff;
+  box-shadow: var(--shadow);
+  text-align: left;
+}

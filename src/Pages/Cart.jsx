@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useOutletContext } from "react-router-dom";
-import ProductGrid from "../Components/ProductGrid";
+import ProductGrid from "../components/ProductGrid";
 import "./Cart.css";
 
 const Cart = () => {

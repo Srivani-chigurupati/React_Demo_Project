@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useOutletContext } from "react-router-dom";
-import ProductGrid from "../Components/ProductGrid";
+import ProductGrid from "../components/ProductGrid";
 import "./Home.css";
 
 const formatCategoryName = (category) =>
@@ -138,13 +138,6 @@ const Home = () => {
         )}
       </section>
 
-      <footer className="home-footer">
-        <Link to="/" className="home-footer-brand">
-          SHOP
-        </Link>
-        <p>Find your next favorite from our growing catalog.</p>
-        <Link to="/products">Browse products</Link>
-      </footer>
     </main>
   );
 };

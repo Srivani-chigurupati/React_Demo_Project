@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useOutletContext, useParams } from "react-router-dom";
-import "../Components/ProductButton.css";
-import "../Components/WishlistButton.css";
+import "../components/ProductButton.css";
+import "../components/WishlistButton.css";
 import "./ProductDetails.css";
 
 const ProductDetails = () => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import Toaster from "../Components/Toaster";
-import getProducts from "../Services/ProductService";
+import Toaster from "../components/Toaster";
+import getProducts from "../services/ProductService";
 
 const ProductLayout = () => {
   const [products, setProducts] = useState([]);

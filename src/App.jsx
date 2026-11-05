@@ -1,23 +1,25 @@
 import "./App.css";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import Navbar from "./Components/Navbar";
-import NotFound from "./Components/NotFound";
-import About from "./Pages/About";
-import Cart from "./Pages/Cart";
-import Checkout from "./Pages/Checkout";
-import Home from "./Pages/Home";
-import ProductDetails from "./Pages/ProductDetails";
-import Products from "./Pages/Products";
-import Wishlist from "./Pages/Wishlist";
-import ProductLayout from "./SharedLayouts/ProductLayout";
-import Login from "./Components/Login";
-import ProtectedRoutes from "./SharedLayouts/ProtectedRoutes";
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
+import NotFound from "./pages/NotFound";
+import About from "./pages/About";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import ProductDetails from "./pages/ProductDetails";
+import Products from "./pages/Products";
+import Wishlist from "./pages/Wishlist";
+import ProductLayout from "./layouts/ProductLayout";
+import ProtectedRoutes from "./layouts/ProtectedRoutes";
 
 function Layout() {
   return (
     <>
       <Navbar />
       <Outlet />
+      <Footer />
     </>
   );
 }

@@ -157,36 +157,6 @@
   color: #a32d2d;
 }
 
-.home-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 28px clamp(20px, 5vw, 56px);
-  background: #24231f;
-  color: #fff;
-}
-
-.home-footer-brand {
-  color: #fff;
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-decoration: none;
-}
-
-.home-footer p {
-  color: #d3d0ca;
-  font-size: 13px;
-}
-
-.home-footer > a:last-child {
-  color: #fff;
-  font-size: 13px;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
 @media (max-width: 600px) {
   .home-section-heading-row {
     align-items: flex-start;
@@ -208,8 +178,4 @@
     font-size: 14px;
   }
 
-  .home-footer {
-    align-items: flex-start;
-    flex-direction: column;
-  }
 }

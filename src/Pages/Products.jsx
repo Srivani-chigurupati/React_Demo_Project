@@ -1,6 +1,6 @@
 import React from "react";
 import { useOutletContext, useSearchParams } from "react-router-dom";
-import ProductGrid from "../Components/ProductGrid";
+import ProductGrid from "../components/ProductGrid";
 
 const Products = () => {
   const [searchParams] = useSearchParams();

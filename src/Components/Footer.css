@@ -1,0 +1,36 @@
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 28px clamp(20px, 5vw, 56px);
+  background: #24231f;
+  color: #fff;
+}
+
+.site-footer-brand {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+}
+
+.site-footer p {
+  color: #d3d0ca;
+  font-size: 13px;
+}
+
+.site-footer > a:last-child {
+  color: #fff;
+  font-size: 13px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .site-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

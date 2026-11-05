@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import getUsers from "../Services/UserService";
-import { useAuth } from "../SharedLayouts/AuthContext";
+import getUsers from "../services/UserService";
+import { useAuth } from "../context/AuthContext";
 import "./Login.css";
 
 const Login = () => {

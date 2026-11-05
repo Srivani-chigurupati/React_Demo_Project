@@ -3,10 +3,9 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import NotFound from "./pages/NotFound";
-import About from "./pages/About";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
-import Home from "./Pages/Home";
+import Home from "./pages/Home";
 import Login from "./pages/Login";
 import ProductDetails from "./pages/ProductDetails";
 import Products from "./pages/Products";
@@ -35,10 +34,6 @@ function App() {
         </ProtectedRoutes>
       ),
       children: [
-        {
-          path: "about",
-          element: <About />,
-        },
         {
           element: <ProductLayout />,
           children: [

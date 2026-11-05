@@ -1,10 +1,29 @@
 import React from "react";
 import { useOutletContext, useSearchParams } from "react-router-dom";
-import ProductGrid from "../components/ProductGrid";
+import ProductGrid from "../Components/ProductGrid";
+
+const getSearchTokens = (value) =>
+  value.toLowerCase().match(/[a-z0-9]+/g) || [];
+
+const matchesSearch = (product, queryTokens) => {
+  if (queryTokens.length === 0) {
+    return true;
+  }
+
+  const productTokens = [product.title, product.brand, product.category]
+    .filter(Boolean)
+    .flatMap(getSearchTokens);
+
+  return queryTokens.every((queryToken) =>
+    productTokens.some((productToken) => productToken.startsWith(queryToken)),
+  );
+};
 
 const Products = () => {
   const [searchParams] = useSearchParams();
   const selectedCategory = searchParams.get("category");
+  const searchTerm = searchParams.get("q")?.trim().toLowerCase() || "";
+  const searchTokens = getSearchTokens(searchTerm);
   const {
     products,
     cart,
@@ -17,15 +36,22 @@ const Products = () => {
     incrementCartQuantity,
     decrementCartQuantity,
   } = useOutletContext();
-  const visibleProducts = selectedCategory
-    ? products.filter((product) => product.category === selectedCategory)
-    : products;
-  const heading = selectedCategory
-    ? selectedCategory
-        .split("-")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ")
-    : "All Products";
+
+  const visibleProducts = products.filter((product) => {
+    const matchesCategory =
+      !selectedCategory || product.category === selectedCategory;
+    const matchesProductSearch = matchesSearch(product, searchTokens);
+
+    return matchesCategory && matchesProductSearch;
+  });
+  const heading = searchTerm
+    ? `Search results for "${searchParams.get("q").trim()}"`
+    : selectedCategory
+      ? selectedCategory
+          .split("-")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ")
+      : "All Products";
 
   return (
     <main className="products-page">
@@ -33,7 +59,12 @@ const Products = () => {
       {loading && <p>Loading products...</p>}
       {error && <p role="alert">{error}</p>}
       {!loading && !error && visibleProducts.length === 0 && (
-        <p>No products found in this category.</p>
+        <p>
+          No products found
+          {searchTerm
+            ? " matching your search"
+            : " in this category"}.
+        </p>
       )}
       <ProductGrid
         products={visibleProducts}

@@ -1,6 +1,7 @@
 .Navbar {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
   padding: 12px 20px;
   background: #f4f3ec;
@@ -37,6 +38,51 @@
   margin-left: auto;
 }
 
+.Nav-search {
+  display: flex;
+  flex: 1 1 240px;
+  max-width: 420px;
+  margin: 0 12px;
+}
+
+.Nav-search input {
+  width: 100%;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid #d5d2c9;
+  border-right: 0;
+  border-radius: 6px 0 0 6px;
+  background: #fff;
+  color: #3f3a46;
+  font: inherit;
+  font-size: 14px;
+}
+
+.Nav-search button {
+  padding: 8px 12px;
+  border: 1px solid #d5d2c9;
+  border-radius: 0 6px 6px 0;
+  background: #fff;
+  color: #3f3a46;
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+}
+
+.Nav-search button:hover {
+  color: #7b2cbf;
+  background: #ebe4f2;
+}
+
 .Nav-logout {
   margin-left: 0;
+}
+
+@media (max-width: 640px) {
+  .Nav-search {
+    order: 1;
+    flex-basis: 100%;
+    max-width: none;
+    margin: 4px 0 0;
+  }
 }

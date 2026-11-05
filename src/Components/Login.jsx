@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import users from "../data/users";
+import getUsers from "../Services/UserService";
 import { useAuth } from "../SharedLayouts/AuthContext";
 import "./Login.css";
 
@@ -9,21 +9,40 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { setIsLoggedIn } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
-  const loginUser = (event) => {
+  const loginUser = async (event) => {
     event.preventDefault();
-    const user = users.find(
-      (user) => user.email === email && user.password === password,
-    );
+    setError("");
+    setIsSubmitting(true);
 
-    if (user) {
+    try {
+      const users = await getUsers();
+      const user = users.find(
+        (candidate) =>
+          typeof candidate.email === "string" &&
+          candidate.email.toLowerCase() === email.trim().toLowerCase() &&
+          candidate.password === password,
+      );
+
+      if (!user) {
+        setError("Invalid email or password.");
+        return;
+      }
+
       setIsLoggedIn(true);
       navigate(location.state?.from?.pathname || "/", { replace: true });
-    } else {
-      setError("Invalid email or password.");
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Could not connect to the login service.",
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -69,8 +88,8 @@ const Login = () => {
             {error}
           </p>
         )}
-        <button className="login-submit" type="submit">
-          Submit
+        <button className="login-submit" type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Signing in..." : "Submit"}
         </button>
       </form>
     </main>

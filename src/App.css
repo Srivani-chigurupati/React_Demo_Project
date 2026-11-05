@@ -1,3 +1,17 @@
+.app-layout {
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+}
+
+.app-content {
+  flex: 1 0 auto;
+}
+
+.site-footer {
+  margin-top: auto;
+}
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;

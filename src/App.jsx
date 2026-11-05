@@ -6,7 +6,7 @@ import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
-import Home from "./pages/Home";
+import Home from "./Pages/Home";
 import Login from "./pages/Login";
 import ProductDetails from "./pages/ProductDetails";
 import Products from "./pages/Products";
@@ -16,11 +16,13 @@ import ProtectedRoutes from "./layouts/ProtectedRoutes";
 
 function Layout() {
   return (
-    <>
+    <div className="app-layout">
       <Navbar />
-      <Outlet />
+      <div className="app-content">
+        <Outlet />
+      </div>
       <Footer />
-    </>
+    </div>
   );
 }
 function App() {

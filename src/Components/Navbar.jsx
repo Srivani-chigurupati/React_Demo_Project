@@ -1,23 +1,70 @@
-import React from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import "./Navbar.css";
 import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
   const { isLoggedIn, setIsLoggedIn } = useAuth();
+  const location = useLocation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const [searchTerm, setSearchTerm] = useState(searchParams.get("q") || "");
+  const searchTimeout = useRef(null);
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     navigate("/login", { replace: true });
   };
 
-  const handleSearch = (event) => {
+  const handleSearchSubmit = (event) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const query = formData.get("q")?.toString().trim() || "";
-    navigate(query ? `/products?q=${encodeURIComponent(query)}` : "/products");
+  };
+
+  useEffect(
+    () => () => {
+      clearTimeout(searchTimeout.current);
+    },
+    [],
+  );
+
+  const handleSearchChange = (event) => {
+    const value = event.target.value;
+    const query = value.trim();
+    setSearchTerm(value);
+    clearTimeout(searchTimeout.current);
+
+    const isProductsPage = location.pathname === "/products";
+
+    if (query.length < 3 && !isProductsPage) {
+      return;
+    }
+
+    const nextParams = new URLSearchParams(searchParams);
+    if (query.length >= 3) {
+      nextParams.set("q", query);
+    } else {
+      nextParams.delete("q");
+    }
+
+    const nextSearch = nextParams.toString();
+    if (isProductsPage && nextSearch === location.search.slice(1)) {
+      return;
+    }
+
+    searchTimeout.current = setTimeout(() => {
+      navigate(
+        {
+          pathname: "/products",
+          search: nextSearch ? `?${nextSearch}` : "",
+        },
+        { replace: true },
+      );
+    }, 250);
   };
 
   return (
@@ -28,22 +75,15 @@ const Navbar = () => {
       <Link to="/products" className="Nav-link">
         Products
       </Link>
-      <form
-        className="Nav-search"
-        role="search"
-        onSubmit={handleSearch}
-        key={searchParams.get("q") || ""}
-      >
+      <form className="Nav-search" role="search" onSubmit={handleSearchSubmit}>
         <input
           aria-label="Search products"
           name="q"
           type="search"
-          placeholder="Search products..."
-          defaultValue={searchParams.get("q") || ""}
+          placeholder="Search products ...."
+          value={searchTerm}
+          onChange={handleSearchChange}
         />
-        <button type="submit" aria-label="Submit product search">
-          Search
-        </button>
       </form>
       <Link to="/cart" className="Nav-link Nav-cart">
         Cart
@@ -52,7 +92,11 @@ const Navbar = () => {
         WishList
       </Link>
       {isLoggedIn && (
-        <button className="Nav-link Nav-logout" type="button" onClick={handleLogout}>
+        <button
+          className="Nav-link Nav-logout"
+          type="button"
+          onClick={handleLogout}
+        >
           Logout
         </button>
       )}

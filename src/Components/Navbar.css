@@ -50,28 +50,11 @@
   min-width: 0;
   padding: 8px 10px;
   border: 1px solid #d5d2c9;
-  border-right: 0;
-  border-radius: 6px 0 0 6px;
+  border-radius: 6px;
   background: #fff;
   color: #3f3a46;
   font: inherit;
   font-size: 14px;
-}
-
-.Nav-search button {
-  padding: 8px 12px;
-  border: 1px solid #d5d2c9;
-  border-radius: 0 6px 6px 0;
-  background: #fff;
-  color: #3f3a46;
-  cursor: pointer;
-  font: inherit;
-  font-size: 14px;
-}
-
-.Nav-search button:hover {
-  color: #7b2cbf;
-  background: #ebe4f2;
 }
 
 .Nav-logout {

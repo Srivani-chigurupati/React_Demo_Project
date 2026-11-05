@@ -23,7 +23,8 @@ const Products = () => {
   const [searchParams] = useSearchParams();
   const selectedCategory = searchParams.get("category");
   const searchTerm = searchParams.get("q")?.trim().toLowerCase() || "";
-  const searchTokens = getSearchTokens(searchTerm);
+  const activeSearchTerm = searchTerm.length >= 3 ? searchTerm : "";
+  const searchTokens = getSearchTokens(activeSearchTerm);
   const {
     products,
     cart,
@@ -44,7 +45,7 @@ const Products = () => {
 
     return matchesCategory && matchesProductSearch;
   });
-  const heading = searchTerm
+  const heading = activeSearchTerm
     ? `Search results for "${searchParams.get("q").trim()}"`
     : selectedCategory
       ? selectedCategory
@@ -61,7 +62,7 @@ const Products = () => {
       {!loading && !error && visibleProducts.length === 0 && (
         <p>
           No products found
-          {searchTerm
+          {activeSearchTerm
             ? " matching your search"
             : " in this category"}.
         </p>

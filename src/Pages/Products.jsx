@@ -55,12 +55,16 @@ const Products = () => {
       : "All Products";
 
   return (
-    <main className="products-page">
-      <h1>{heading}</h1>
-      {loading && <p>Loading products...</p>}
-      {error && <p role="alert">{error}</p>}
+    <main className="container py-4 products-page">
+      <h1 className="mb-4">{heading}</h1>
+      {loading && <p className="alert alert-info">Loading products...</p>}
+      {error && (
+        <p className="alert alert-danger" role="alert">
+          {error}
+        </p>
+      )}
       {!loading && !error && visibleProducts.length === 0 && (
-        <p>
+        <p className="alert alert-secondary">
           No products found
           {activeSearchTerm
             ? " matching your search"

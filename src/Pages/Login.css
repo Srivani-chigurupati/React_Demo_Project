@@ -26,23 +26,6 @@
   color: var(--text-h);
 }
 
-.login-field input {
-  box-sizing: border-box;
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #9ca3af;
-  border-radius: 4px;
-  background: var(--bg);
-  color: var(--text-h);
-  font: inherit;
-}
-
-.login-field input:focus-visible {
-  border-color: var(--accent);
-  outline: 2px solid var(--accent-border);
-  outline-offset: 2px;
-}
-
 .password-input-wrapper {
   position: relative;
 }
@@ -76,25 +59,9 @@
 }
 
 .login-form .login-submit {
-  appearance: none;
   display: block;
   width: 100%;
-  min-height: 44px;
   margin-top: 8px;
-  padding: 10px;
-  border: 1px solid #7b2cbf;
-  border-radius: 4px;
-  background: #7b2cbf;
-  color: #fff;
-  font: inherit;
-  font-weight: 600;
-  text-align: center;
-  cursor: pointer;
-}
-
-.login-form .login-submit:hover {
-  background: #64219f;
-  border-color: #64219f;
 }
 
 .login-form .login-submit:disabled {

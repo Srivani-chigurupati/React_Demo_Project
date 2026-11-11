@@ -67,7 +67,7 @@ const Home = () => {
         <p className="home-intro">
           Browse the latest picks across beauty, fashion, tech, home, and more.
         </p>
-        <Link className="home-shop-button" to="/products">
+        <Link className="home-shop-button btn btn-dark" to="/products">
           Explore all products
         </Link>
       </section>

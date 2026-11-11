@@ -68,15 +68,16 @@ const Navbar = () => {
   };
 
   return (
-    <header className="Navbar">
-      <Link to="/" className="Nav-link Nav-home">
+    <header className="Navbar navbar navbar-expand bg-light border-bottom px-3 px-md-4 gap-2">
+      <Link to="/" className="Nav-link Nav-home navbar-brand">
         Home
       </Link>
-      <Link to="/products" className="Nav-link">
+      <Link to="/products" className="Nav-link nav-link">
         Products
       </Link>
       <form className="Nav-search" role="search" onSubmit={handleSearchSubmit}>
         <input
+          className="form-control"
           aria-label="Search products"
           name="q"
           type="search"
@@ -93,7 +94,7 @@ const Navbar = () => {
       </Link>
       {isLoggedIn && (
         <button
-          className="Nav-link Nav-logout"
+          className="Nav-link Nav-logout btn btn-outline-secondary btn-sm"
           type="button"
           onClick={handleLogout}
         >

@@ -14,18 +14,7 @@
 }
 
 .checkout-button {
-  display: inline-block;
-  padding: 10px 14px;
-  border: 1px solid #7b2cbf;
-  border-radius: 4px;
-  background: #7b2cbf;
-  color: #fff;
-  font-size: 16px;
   text-decoration: none;
-}
-
-.checkout-button:hover {
-  background: #64219f;
 }
 
 .checkout-button:focus-visible {

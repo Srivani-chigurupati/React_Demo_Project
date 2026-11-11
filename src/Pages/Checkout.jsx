@@ -15,10 +15,10 @@ const Checkout = () => {
 
   if (cart.length === 0) {
     return (
-      <main className="checkout-page">
-        <h1>Checkout</h1>
-        <p>Your cart is empty.</p>
-        <Link className="checkout-link" to="/products">
+      <main className="container checkout-page py-4">
+        <h1 className="mb-4">Checkout</h1>
+        <p className="alert alert-secondary">Your cart is empty.</p>
+        <Link className="checkout-link btn btn-outline-primary" to="/products">
           Continue shopping
         </Link>
       </main>
@@ -26,9 +26,9 @@ const Checkout = () => {
   }
 
   return (
-    <main className="checkout-page">
-      <h1>Checkout</h1>
-      <section className="checkout-summary" aria-label="Order summary">
+    <main className="container checkout-page py-4">
+      <h1 className="mb-4">Checkout</h1>
+      <section className="checkout-summary card p-4" aria-label="Order summary">
         <h2>Order summary</h2>
         {cart.map((product) => {
           const discountedPrice =
@@ -51,7 +51,7 @@ const Checkout = () => {
           Payment processing is not available yet.
         </p>
       </section>
-      <Link className="checkout-link" to="/cart">
+      <Link className="checkout-link btn btn-outline-primary" to="/cart">
         Back to cart
       </Link>
     </main>

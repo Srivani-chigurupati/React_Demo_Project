@@ -48,13 +48,6 @@
 .Nav-search input {
   width: 100%;
   min-width: 0;
-  padding: 8px 10px;
-  border: 1px solid #d5d2c9;
-  border-radius: 6px;
-  background: #fff;
-  color: #3f3a46;
-  font: inherit;
-  font-size: 14px;
 }
 
 .Nav-logout {

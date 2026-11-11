@@ -47,13 +47,14 @@ const Login = () => {
   };
 
   return (
-    <main className="login-page">
-      <form className="login-form" onSubmit={loginUser}>
-        <h1>Login</h1>
+    <main className="login-page container py-5">
+      <form className="login-form card p-4 shadow-sm" onSubmit={loginUser}>
+        <h1 className="h2">Login</h1>
         <div className="login-field">
           <label htmlFor="login-email">Email</label>
           <input
             id="login-email"
+            className="form-control"
             type="email"
             autoComplete="username"
             value={email}
@@ -66,6 +67,7 @@ const Login = () => {
           <div className="password-input-wrapper">
             <input
               id="login-password"
+              className="form-control"
               type={showPassword ? "text" : "password"}
               autoComplete="current-password"
               value={password}
@@ -84,11 +86,11 @@ const Login = () => {
           </div>
         </div>
         {error && (
-          <p className="login-error" role="alert">
+          <p className="login-error alert alert-danger py-2" role="alert">
             {error}
           </p>
         )}
-        <button className="login-submit" type="submit" disabled={isSubmitting}>
+        <button className="login-submit btn btn-primary" type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Signing in..." : "Submit"}
         </button>
       </form>

@@ -22,10 +22,10 @@ const Cart = () => {
   );
 
   return (
-    <main>
-      <h1>Cart</h1>
+    <main className="container py-4">
+      <h1 className="mb-4">Cart</h1>
       {cart.length === 0 ? (
-        <p>Your cart is empty.</p>
+        <p className="alert alert-secondary">Your cart is empty.</p>
       ) : (
         <ProductGrid
           products={cart}
@@ -42,7 +42,7 @@ const Cart = () => {
           <p>
             Total: <strong>${cartTotal.toFixed(2)}</strong>
           </p>
-          <Link className="checkout-button" to="/checkout">
+          <Link className="checkout-button btn btn-primary" to="/checkout">
             Proceed to Checkout
           </Link>
         </section>

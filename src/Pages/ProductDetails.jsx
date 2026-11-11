@@ -25,17 +25,31 @@ const ProductDetails = () => {
   };
 
   if (loading) {
-    return <p>Loading product...</p>;
+    return (
+      <p className="container py-4 alert alert-info">Loading product...</p>
+    );
   }
-  if (error) return <p role="alert">{error}</p>;
-  if (!product) return <p>Product not found.</p>;
+  if (error) {
+    return (
+      <p className="container py-4 alert alert-danger" role="alert">
+        {error}
+      </p>
+    );
+  }
+  if (!product) {
+    return (
+      <p className="container py-4 alert alert-secondary">
+        Product not found.
+      </p>
+    );
+  }
 
   const isWishlisted = wishlist.some((item) => item.id === product.id);
   const cartItem = cart.find((item) => item.id === product.id);
 
   return (
     <div className="product-details-container">
-      <div className="product-card">
+      <div className="product-card card">
         <img
           className="product-image"
           src={product.images[0]}
@@ -56,7 +70,7 @@ const ProductDetails = () => {
           <p className="product-rating">⭐ {product.rating}</p>
           <div className="product-actions">
             <button
-              className="product-button"
+              className="product-button btn btn-primary"
               type="button"
               onClick={() => addToCart(product)}
             >
@@ -65,7 +79,7 @@ const ProductDetails = () => {
             {cartItem && (
               <div className="quantity-control" aria-label="Quantity">
                 <button
-                  className="quantity-button"
+                  className="quantity-button btn btn-outline-secondary btn-sm"
                   type="button"
                   aria-label={`Decrease ${product.title} quantity`}
                   onClick={() => decrementCartQuantity(product)}
@@ -74,7 +88,7 @@ const ProductDetails = () => {
                 </button>
                 <span aria-live="polite">{cartItem.quantity || 1}</span>
                 <button
-                  className="quantity-button"
+                  className="quantity-button btn btn-outline-secondary btn-sm"
                   type="button"
                   aria-label={`Increase ${product.title} quantity`}
                   onClick={() => incrementCartQuantity(product)}
@@ -101,7 +115,7 @@ const ProductDetails = () => {
           </button>
         </div>
       </div>
-      <Link className="back-button" to="/products">
+      <Link className="back-button btn btn-outline-primary" to="/products">
         Back to products
       </Link>
     </div>

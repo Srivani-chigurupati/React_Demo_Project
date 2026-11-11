@@ -14,10 +14,10 @@ const Wishlist = () => {
   } = useOutletContext();
 
   return (
-    <main>
-      <h1>Wishlist</h1>
+    <main className="container py-4">
+      <h1 className="mb-4">Wishlist</h1>
       {wishlist.length === 0 ? (
-        <p>Your wishlist is empty.</p>
+        <p className="alert alert-secondary">Your wishlist is empty.</p>
       ) : (
         <ProductGrid
           products={wishlist}

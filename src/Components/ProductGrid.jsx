@@ -55,6 +55,14 @@ const ProductGrid = ({
                 alt=""
               />
               <div className="card-body product-card-info">
+                <span className="product-category">
+                  {product.category
+                    .split("-")
+                    .map(
+                      (word) => word.charAt(0).toUpperCase() + word.slice(1),
+                    )
+                    .join(" ")}
+                </span>
                 <h2 className="product-title card-title">{product.title}</h2>
                 <p className="product-price">
                   $

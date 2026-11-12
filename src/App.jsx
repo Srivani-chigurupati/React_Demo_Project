@@ -1,17 +1,19 @@
 import "./App.css";
+import { lazy, Suspense } from "react";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import NotFound from "./Pages/NotFound";
-import Cart from "./Pages/Cart";
 import Checkout from "./Pages/Checkout";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
-import ProductDetails from "./Pages/ProductDetails";
 import Products from "./Pages/Products";
-import Wishlist from "./Pages/Wishlist";
 import ProductLayout from "./layouts/ProductLayout";
 import ProtectedRoutes from "./layouts/ProtectedRoutes";
+
+const Cart = lazy(() => import("./Pages/Cart"));
+const ProductDetails = lazy(() => import("./Pages/ProductDetails"));
+const Wishlist = lazy(() => import("./Pages/Wishlist"));
 
 function Layout() {
   return (
@@ -65,7 +67,17 @@ function App() {
     },
     { path: "/login", element: <Login /> },
   ]);
-  return <RouterProvider router={routes}></RouterProvider>;
+  return (
+    <Suspense
+      fallback={
+        <div className="container py-5 text-center" role="status">
+          Loading page...
+        </div>
+      }
+    >
+      <RouterProvider router={routes} />
+    </Suspense>
+  );
 }
 
 export default App;

@@ -1,70 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  Link,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { useAuth } from "../context/AuthContext";
+import ProductSearch from "./ProductSearch";
 
 const Navbar = () => {
   const { isLoggedIn, setIsLoggedIn } = useAuth();
-  const location = useLocation();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const [searchTerm, setSearchTerm] = useState(searchParams.get("q") || "");
-  const searchTimeout = useRef(null);
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     navigate("/login", { replace: true });
-  };
-
-  const handleSearchSubmit = (event) => {
-    event.preventDefault();
-  };
-
-  useEffect(
-    () => () => {
-      clearTimeout(searchTimeout.current);
-    },
-    [],
-  );
-
-  const handleSearchChange = (event) => {
-    const value = event.target.value;
-    const query = value.trim();
-    setSearchTerm(value);
-    clearTimeout(searchTimeout.current);
-
-    const isProductsPage = location.pathname === "/products";
-
-    if (query.length < 3 && !isProductsPage) {
-      return;
-    }
-
-    const nextParams = new URLSearchParams(searchParams);
-    if (query.length >= 3) {
-      nextParams.set("q", query);
-    } else {
-      nextParams.delete("q");
-    }
-
-    const nextSearch = nextParams.toString();
-    if (isProductsPage && nextSearch === location.search.slice(1)) {
-      return;
-    }
-
-    searchTimeout.current = setTimeout(() => {
-      navigate(
-        {
-          pathname: "/products",
-          search: nextSearch ? `?${nextSearch}` : "",
-        },
-        { replace: true },
-      );
-    }, 250);
   };
 
   return (
@@ -75,17 +20,7 @@ const Navbar = () => {
       <Link to="/products" className="Nav-link nav-link">
         Products
       </Link>
-      <form className="Nav-search" role="search" onSubmit={handleSearchSubmit}>
-        <input
-          className="form-control"
-          aria-label="Search products"
-          name="q"
-          type="search"
-          placeholder="Search products ...."
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
-      </form>
+      <ProductSearch />
       <Link to="/cart" className="Nav-link Nav-cart">
         Cart
       </Link>

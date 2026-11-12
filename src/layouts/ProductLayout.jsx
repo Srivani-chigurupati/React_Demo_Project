@@ -16,6 +16,9 @@ const ProductLayout = () => {
     removeFromCart,
     incrementCartQuantity,
     decrementCartQuantity,
+    addProduct,
+    updateProduct,
+    deleteProduct,
   } = useProductStore();
 
   return (
@@ -33,6 +36,9 @@ const ProductLayout = () => {
           removeFromCart,
           incrementCartQuantity,
           decrementCartQuantity,
+          addProduct,
+          updateProduct,
+          deleteProduct,
         }}
       />
     </>

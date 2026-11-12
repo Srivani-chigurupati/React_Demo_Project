@@ -14,6 +14,15 @@ import ProtectedRoutes from "./layouts/ProtectedRoutes";
 const Cart = lazy(() => import("./Pages/Cart"));
 const ProductDetails = lazy(() => import("./Pages/ProductDetails"));
 const Wishlist = lazy(() => import("./Pages/Wishlist"));
+const AdminLayout = lazy(() => import("./layouts/AdminLayout"));
+const AdminDashboard = lazy(() => import("./pages/Admin/AdminDashboard"));
+const AdminAddProduct = lazy(() => import("./pages/Admin/AdminAddProduct"));
+const AdminUpdateProduct = lazy(
+  () => import("./pages/Admin/AdminUpdateProduct"),
+);
+const AdminDeleteProduct = lazy(
+  () => import("./pages/Admin/AdminDeleteProduct"),
+);
 
 function Layout() {
   return (
@@ -56,6 +65,25 @@ function App() {
             {
               path: "wishlist",
               element: <Wishlist />,
+            },
+            {
+              path: "admin",
+              element: <AdminLayout />,
+              children: [
+                { index: true, element: <AdminDashboard /> },
+                {
+                  path: "products/add",
+                  element: <AdminAddProduct />,
+                },
+                {
+                  path: "products/update",
+                  element: <AdminUpdateProduct />,
+                },
+                {
+                  path: "products/delete",
+                  element: <AdminDeleteProduct />,
+                },
+              ],
             },
           ],
         },

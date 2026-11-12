@@ -1,6 +1,20 @@
 import { useEffect, useState } from "react";
 import getProducts from "../services/ProductService";
 
+const PRODUCTS_STORAGE_KEY = "my-demo-app-products-v1";
+
+const isProductList = (value) =>
+  Array.isArray(value) &&
+  value.every(
+    (product) =>
+      product &&
+      typeof product.id === "number" &&
+      typeof product.title === "string" &&
+      typeof product.price === "number" &&
+      typeof product.category === "string" &&
+      Array.isArray(product.images),
+  );
+
 const useProductStore = () => {
   const [products, setProducts] = useState([]);
   const [wishlist, setWishlist] = useState([]);
@@ -23,6 +37,16 @@ const useProductStore = () => {
 
     const loadProducts = async () => {
       try {
+        const savedProducts = localStorage.getItem(PRODUCTS_STORAGE_KEY);
+        if (savedProducts !== null) {
+          const parsedProducts = JSON.parse(savedProducts);
+          if (!isProductList(parsedProducts)) {
+            throw new Error("Saved products data is invalid.");
+          }
+          setProducts(parsedProducts);
+          return;
+        }
+
         const loadedProducts = await getProducts(controller.signal);
         setProducts(loadedProducts);
       } catch (err) {
@@ -41,6 +65,61 @@ const useProductStore = () => {
     loadProducts();
     return () => controller.abort();
   }, []);
+
+  const saveProducts = (nextProducts) => {
+    localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(nextProducts));
+    setProducts(nextProducts);
+  };
+
+  const addProduct = (productData) => {
+    const nextId =
+      products.reduce(
+        (largestId, product) => Math.max(largestId, product.id),
+        0,
+      ) + 1;
+    const newProduct = { ...productData, id: nextId };
+    saveProducts([...products, newProduct]);
+    setToastMessage(`${newProduct.title} added to products`);
+    return newProduct;
+  };
+
+  const updateProduct = (productId, productData) => {
+    const existingProduct = products.find((product) => product.id === productId);
+    if (!existingProduct) {
+      throw new Error("Product no longer exists.");
+    }
+
+    const updatedProduct = { ...existingProduct, ...productData, id: productId };
+    saveProducts(
+      products.map((product) =>
+        product.id === productId ? updatedProduct : product,
+      ),
+    );
+    setWishlist((items) =>
+      items.map((item) =>
+        item.id === productId ? { ...item, ...updatedProduct } : item,
+      ),
+    );
+    setCart((items) =>
+      items.map((item) =>
+        item.id === productId ? { ...item, ...updatedProduct } : item,
+      ),
+    );
+    setToastMessage(`${updatedProduct.title} updated`);
+    return updatedProduct;
+  };
+
+  const deleteProduct = (productId) => {
+    const productToDelete = products.find((product) => product.id === productId);
+    if (!productToDelete) {
+      throw new Error("Product no longer exists.");
+    }
+
+    saveProducts(products.filter((product) => product.id !== productId));
+    setWishlist((items) => items.filter((item) => item.id !== productId));
+    setCart((items) => items.filter((item) => item.id !== productId));
+    setToastMessage(`${productToDelete.title} deleted`);
+  };
 
   const toggleWishlist = (product) => {
     const isWishlisted = wishlist.some((item) => item.id === product.id);
@@ -132,6 +211,9 @@ const useProductStore = () => {
     removeFromCart,
     incrementCartQuantity,
     decrementCartQuantity,
+    addProduct,
+    updateProduct,
+    deleteProduct,
   };
 };
 

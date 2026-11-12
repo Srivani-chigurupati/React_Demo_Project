@@ -27,6 +27,9 @@ const Navbar = () => {
       <Link to="/wishlist" className="Nav-link Nav-wishlist">
         WishList
       </Link>
+      <Link to="/admin" className="Nav-link">
+        Admin
+      </Link>
       {isLoggedIn && (
         <button
           className="Nav-link Nav-logout btn btn-outline-secondary btn-sm"

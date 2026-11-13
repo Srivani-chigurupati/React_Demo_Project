@@ -5,8 +5,11 @@ const AdminProductList = ({
   loading,
   actionLabel,
   onAction,
+  pagination = false,
 }) => {
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const pageSize = 10;
   const visibleProducts = useMemo(() => {
     const normalizedSearch = search.trim().toLowerCase();
     return products.filter((product) =>
@@ -15,6 +18,11 @@ const AdminProductList = ({
         .some((value) => value.toLowerCase().includes(normalizedSearch)),
     );
   }, [products, search]);
+  const pageCount = Math.ceil(visibleProducts.length / pageSize);
+  const currentPage = Math.min(page, pageCount || 1);
+  const displayedProducts = pagination
+    ? visibleProducts.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+    : visibleProducts;
   const searchId = `admin-${actionLabel.toLowerCase()}-search`;
 
   return (
@@ -36,7 +44,10 @@ const AdminProductList = ({
             type="search"
             placeholder="Search products..."
             value={search}
-            onChange={(event) => setSearch(event.target.value)}
+            onChange={(event) => {
+              setSearch(event.target.value);
+              setPage(1);
+            }}
           />
         </div>
         {loading ? (
@@ -56,7 +67,7 @@ const AdminProductList = ({
                 </tr>
               </thead>
               <tbody>
-                {visibleProducts.map((product) => (
+                {displayedProducts.map((product) => (
                   <tr key={product.id}>
                     <td>
                       <div className="d-flex align-items-center gap-3">
@@ -101,6 +112,55 @@ const AdminProductList = ({
               </tbody>
             </table>
           </div>
+        )}
+        {pagination && pageCount > 1 && (
+          <nav className="mt-3" aria-label="Product list pages">
+            <ul className="pagination justify-content-center mb-0">
+              <li className={`page-item${currentPage === 1 ? " disabled" : ""}`}>
+                <button
+                  className="page-link"
+                  type="button"
+                  disabled={currentPage === 1}
+                  onClick={() => setPage(currentPage - 1)}
+                  aria-label="Previous page"
+                >
+                  Previous
+                </button>
+              </li>
+              {Array.from({ length: pageCount }, (_, index) => {
+                const pageNumber = index + 1;
+                return (
+                  <li
+                    className={`page-item${pageNumber === currentPage ? " active" : ""}`}
+                    key={pageNumber}
+                  >
+                    <button
+                      className="page-link"
+                      type="button"
+                      onClick={() => setPage(pageNumber)}
+                      aria-label={`Page ${pageNumber}`}
+                      aria-current={pageNumber === currentPage ? "page" : undefined}
+                    >
+                      {pageNumber}
+                    </button>
+                  </li>
+                );
+              })}
+              <li
+                className={`page-item${currentPage === pageCount ? " disabled" : ""}`}
+              >
+                <button
+                  className="page-link"
+                  type="button"
+                  disabled={currentPage === pageCount}
+                  onClick={() => setPage(currentPage + 1)}
+                  aria-label="Next page"
+                >
+                  Next
+                </button>
+              </li>
+            </ul>
+          </nav>
         )}
       </div>
     </section>

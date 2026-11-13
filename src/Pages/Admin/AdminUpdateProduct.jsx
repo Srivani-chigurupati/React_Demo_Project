@@ -20,6 +20,7 @@ const AdminUpdateProduct = () => {
         loading={loading}
         actionLabel="Edit"
         onAction={setSelectedProduct}
+        pagination
       />
     );
   }

@@ -19,6 +19,7 @@ const AdminDeleteProduct = () => {
         products={products}
         loading={loading}
         actionLabel="Delete"
+        pagination
         onAction={(product) => {
           if (!window.confirm(`Delete "${product.title}"? This cannot be undone.`)) {
             return;

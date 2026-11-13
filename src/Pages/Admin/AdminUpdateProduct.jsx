@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AdminProductForm from "../../components/Admin/AdminProductForm";
 import AdminProductList from "../../components/Admin/AdminProductList";
+import useProductStoreContext from "../../hooks/useProductStoreContext";
 
 const AdminUpdateProduct = () => {
-  const { products, loading, updateProduct } = useOutletContext();
+  const { products, loading, updateProduct } = useProductStoreContext();
   const [selectedProduct, setSelectedProduct] = useState(null);
   const navigate = useNavigate();
 

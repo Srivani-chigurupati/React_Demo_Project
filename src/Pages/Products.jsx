@@ -1,7 +1,7 @@
 import React from "react";
-import { useOutletContext } from "react-router-dom";
 import ProductGrid from "../Components/ProductGrid";
 import ProductFilters from "../Components/ProductFilters";
+import useProductStoreContext from "../hooks/useProductStoreContext";
 
 const Products = () => {
   const {
@@ -15,7 +15,7 @@ const Products = () => {
     removeFromCart,
     incrementCartQuantity,
     decrementCartQuantity,
-  } = useOutletContext();
+  } = useProductStoreContext();
 
   return (
     <main className="container py-4 products-page">

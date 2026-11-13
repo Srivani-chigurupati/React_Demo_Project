@@ -1,6 +1,6 @@
 import React from "react";
-import { useOutletContext } from "react-router-dom";
-import ProductGrid from "../components/ProductGrid";
+import ProductGrid from "../Components/ProductGrid";
+import useProductStoreContext from "../hooks/useProductStoreContext";
 
 const Wishlist = () => {
   const {
@@ -11,7 +11,7 @@ const Wishlist = () => {
     removeFromCart,
     incrementCartQuantity,
     decrementCartQuantity,
-  } = useOutletContext();
+  } = useProductStoreContext();
 
   return (
     <main className="container py-4">

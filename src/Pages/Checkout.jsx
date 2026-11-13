@@ -1,9 +1,10 @@
 import React from "react";
-import { Link, useOutletContext } from "react-router-dom";
+import { Link } from "react-router-dom";
+import useProductStoreContext from "../hooks/useProductStoreContext";
 import "./Checkout.css";
 
 const Checkout = () => {
-  const { cart } = useOutletContext();
+  const { cart } = useProductStoreContext();
   const cartTotal = cart.reduce(
     (total, product) =>
       total +

@@ -1,6 +1,7 @@
 import React from "react";
-import { Link, useOutletContext } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ProductGrid from "../Components/ProductGrid";
+import useProductStoreContext from "../hooks/useProductStoreContext";
 import "./Home.css";
 
 const formatCategoryName = (category) =>
@@ -18,7 +19,7 @@ const Home = () => {
     error,
     toggleWishlist,
     addToCart,
-  } = useOutletContext();
+  } = useProductStoreContext();
 
   //   const categoryMap = {};
 

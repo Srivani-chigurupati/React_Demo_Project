@@ -15,7 +15,7 @@ const isProductList = (value) =>
       Array.isArray(product.images),
   );
 
-const useProductStore = () => {
+export const useProductStore = () => {
   const [products, setProducts] = useState([]);
   const [wishlist, setWishlist] = useState([]);
   const [cart, setCart] = useState([]);
@@ -77,6 +77,7 @@ const useProductStore = () => {
         (largestId, product) => Math.max(largestId, product.id),
         0,
       ) + 1;
+    //const nextId = Math.max(0, ...products.map((product) => product.id)) + 1;
     const newProduct = { ...productData, id: nextId };
     saveProducts([...products, newProduct]);
     setToastMessage(`${newProduct.title} added to products`);
@@ -84,12 +85,18 @@ const useProductStore = () => {
   };
 
   const updateProduct = (productId, productData) => {
-    const existingProduct = products.find((product) => product.id === productId);
+    const existingProduct = products.find(
+      (product) => product.id === productId,
+    );
     if (!existingProduct) {
       throw new Error("Product no longer exists.");
     }
 
-    const updatedProduct = { ...existingProduct, ...productData, id: productId };
+    const updatedProduct = {
+      ...existingProduct,
+      ...productData,
+      id: productId,
+    };
     saveProducts(
       products.map((product) =>
         product.id === productId ? updatedProduct : product,
@@ -110,7 +117,9 @@ const useProductStore = () => {
   };
 
   const deleteProduct = (productId) => {
-    const productToDelete = products.find((product) => product.id === productId);
+    const productToDelete = products.find(
+      (product) => product.id === productId,
+    );
     if (!productToDelete) {
       throw new Error("Product no longer exists.");
     }
@@ -168,9 +177,7 @@ const useProductStore = () => {
   const removeFromCart = (product) => {
     const alreadyInCart = cart.some((item) => item.id === product.id);
     setCart((items) =>
-      alreadyInCart
-        ? items.filter((item) => item.id !== product.id)
-        : items,
+      alreadyInCart ? items.filter((item) => item.id !== product.id) : items,
     );
 
     if (alreadyInCart) {
@@ -216,5 +223,3 @@ const useProductStore = () => {
     deleteProduct,
   };
 };
-
-export default useProductStore;

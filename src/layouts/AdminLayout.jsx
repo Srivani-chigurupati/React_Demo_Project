@@ -1,14 +1,14 @@
-import { NavLink, Outlet, useOutletContext } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
+import useProductStoreContext from "../hooks/useProductStoreContext";
 
 const adminLinks = [
-  { to: "/admin", label: "Overview", end: true },
   { to: "/admin/products/add", label: "Add product" },
   { to: "/admin/products/update", label: "Update product" },
   { to: "/admin/products/delete", label: "Delete product" },
 ];
 
 const Admin = () => {
-  const productContext = useOutletContext();
+  const { error } = useProductStoreContext();
 
   return (
     <main className="container py-4">
@@ -19,9 +19,7 @@ const Admin = () => {
       <nav className="nav nav-tabs mb-4" aria-label="Admin navigation">
         {adminLinks.map(({ to, label, end }) => (
           <NavLink
-            className={({ isActive }) =>
-              `nav-link${isActive ? " active" : ""}`
-            }
+            className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
             end={end}
             key={to}
             to={to}
@@ -30,12 +28,12 @@ const Admin = () => {
           </NavLink>
         ))}
       </nav>
-      {productContext.error && (
+      {error && (
         <p className="alert alert-danger" role="alert">
-          Products could not be loaded: {productContext.error}
+          Products could not be loaded: {error}
         </p>
       )}
-      <Outlet context={productContext} />
+      <Outlet />
     </main>
   );
 };

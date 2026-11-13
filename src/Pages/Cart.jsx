@@ -1,6 +1,7 @@
 import React from "react";
-import { Link, useOutletContext } from "react-router-dom";
-import ProductGrid from "../components/ProductGrid";
+import { Link } from "react-router-dom";
+import ProductGrid from "../Components/ProductGrid";
+import useProductStoreContext from "../hooks/useProductStoreContext";
 import "./Cart.css";
 
 const Cart = () => {
@@ -11,7 +12,7 @@ const Cart = () => {
     removeFromCart,
     incrementCartQuantity,
     decrementCartQuantity,
-  } = useOutletContext();
+  } = useProductStoreContext();
   const cartTotal = cart.reduce(
     (total, product) =>
       total +

@@ -1,21 +1,26 @@
 import "./App.css";
 import { lazy, Suspense } from "react";
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
+import {
+  createBrowserRouter,
+  Navigate,
+  Outlet,
+  RouterProvider,
+} from "react-router-dom";
+import Footer from "./Components/Footer";
+import Navbar from "./Components/Navbar";
 import NotFound from "./Pages/NotFound";
 import Checkout from "./Pages/Checkout";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import Products from "./Pages/Products";
 import ProductLayout from "./layouts/ProductLayout";
+import { ProductStoreProvider } from "./contexts/ProductStoreContext";
 import ProtectedRoutes from "./layouts/ProtectedRoutes";
 
 const Cart = lazy(() => import("./Pages/Cart"));
 const ProductDetails = lazy(() => import("./Pages/ProductDetails"));
 const Wishlist = lazy(() => import("./Pages/Wishlist"));
 const AdminLayout = lazy(() => import("./layouts/AdminLayout"));
-const AdminDashboard = lazy(() => import("./pages/Admin/AdminDashboard"));
 const AdminAddProduct = lazy(() => import("./pages/Admin/AdminAddProduct"));
 const AdminUpdateProduct = lazy(
   () => import("./pages/Admin/AdminUpdateProduct"),
@@ -35,66 +40,49 @@ function Layout() {
     </div>
   );
 }
+
 function App() {
   const routes = createBrowserRouter([
     {
       path: "/",
       element: (
         <ProtectedRoutes>
-          <Layout />
+          <ProductStoreProvider>
+            <Layout />
+          </ProductStoreProvider>
         </ProtectedRoutes>
       ),
       children: [
         {
           element: <ProductLayout />,
           children: [
-            {
-              index: true,
-              element: <Home />,
-            },
-            {
-              path: "products",
-              element: <Products />,
-            },
-            {
-              path: "product-details/:id",
-              element: <ProductDetails />,
-            },
+            { index: true, element: <Home /> },
+            { path: "products", element: <Products /> },
+            { path: "product-details/:id", element: <ProductDetails /> },
             { path: "cart", element: <Cart /> },
             { path: "checkout", element: <Checkout /> },
-            {
-              path: "wishlist",
-              element: <Wishlist />,
-            },
-            {
-              path: "admin",
-              element: <AdminLayout />,
-              children: [
-                { index: true, element: <AdminDashboard /> },
-                {
-                  path: "products/add",
-                  element: <AdminAddProduct />,
-                },
-                {
-                  path: "products/update",
-                  element: <AdminUpdateProduct />,
-                },
-                {
-                  path: "products/delete",
-                  element: <AdminDeleteProduct />,
-                },
-              ],
-            },
+            { path: "wishlist", element: <Wishlist /> },
           ],
         },
         {
-          path: "*",
-          element: <NotFound />,
+          path: "admin",
+          element: <AdminLayout />,
+          children: [
+            {
+              index: true,
+              element: <Navigate to="/admin/products/add" replace />,
+            },
+            { path: "products/add", element: <AdminAddProduct /> },
+            { path: "products/update", element: <AdminUpdateProduct /> },
+            { path: "products/delete", element: <AdminDeleteProduct /> },
+          ],
         },
+        { path: "*", element: <NotFound /> },
       ],
     },
     { path: "/login", element: <Login /> },
   ]);
+
   return (
     <Suspense
       fallback={

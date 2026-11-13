@@ -1,7 +1,8 @@
 import React from "react";
-import { Link, useOutletContext, useParams } from "react-router-dom";
-import "../components/ProductButton.css";
-import "../components/WishlistButton.css";
+import { Link, useParams } from "react-router-dom";
+import "../Components/ProductButton.css";
+import "../Components/WishlistButton.css";
+import useProductStoreContext from "../hooks/useProductStoreContext";
 import "./ProductDetails.css";
 
 const ProductDetails = () => {
@@ -16,7 +17,7 @@ const ProductDetails = () => {
     cart,
     incrementCartQuantity,
     decrementCartQuantity,
-  } = useOutletContext();
+  } = useProductStoreContext();
   const product = products.find((item) => item.id === Number(id));
 
   const calculateDiscountedPrice = (price, discountPercentage) => {

@@ -1,8 +1,9 @@
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AdminProductForm from "../../components/Admin/AdminProductForm";
+import useProductStoreContext from "../../hooks/useProductStoreContext";
 
 const AdminAddProduct = () => {
-  const { addProduct, loading } = useOutletContext();
+  const { addProduct, loading } = useProductStoreContext();
   const navigate = useNavigate();
 
   return (

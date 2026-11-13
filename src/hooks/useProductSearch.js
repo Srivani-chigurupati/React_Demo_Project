@@ -8,12 +8,9 @@ const useProductSearch = () => {
   const [searchTerm, setSearchTerm] = useState(searchParams.get("q") || "");
   const searchTimeout = useRef(null);
 
-  useEffect(
-    () => () => {
-      clearTimeout(searchTimeout.current);
-    },
-    [],
-  );
+  useEffect(() => {
+    clearTimeout(searchTimeout.current);
+  }, []);
 
   const handleSearchChange = (event) => {
     const value = event.target.value;

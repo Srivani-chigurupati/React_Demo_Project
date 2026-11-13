@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-import "../Components/ProductButton.css";
-import "../Components/WishlistButton.css";
+import "../components/ProductButton.css";
+import "../components/WishlistButton.css";
 import useProductStoreContext from "../hooks/useProductStoreContext";
 import "./ProductDetails.css";
 

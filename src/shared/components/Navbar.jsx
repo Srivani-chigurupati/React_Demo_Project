@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
-import useAuth from "../hooks/useAuth";
-import useProductStoreContext from "../hooks/useProductStoreContext";
-import ProductSearch from "./ProductSearch";
+import useAuth from "../../features/auth/hooks/useAuth";
+import useProductStoreContext from "../../features/catalog/hooks/useProductStoreContext";
+import ProductSearch from "../../features/catalog/components/ProductSearch";
 
 const Navbar = () => {
   const { isLoggedIn, setIsLoggedIn } = useAuth();

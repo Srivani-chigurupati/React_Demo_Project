@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
+import useAuth from "./hooks/useAuth";
 
 const ProtectedRoutes = ({ children }) => {
   const { isLoggedIn } = useAuth();

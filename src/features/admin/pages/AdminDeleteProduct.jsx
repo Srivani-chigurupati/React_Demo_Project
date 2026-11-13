@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AdminProductList from "../../components/Admin/AdminProductList";
-import useProductStoreContext from "../../hooks/useProductStoreContext";
+import AdminProductList from "../components/AdminProductList";
+import useProductStoreContext from "../../catalog/hooks/useProductStoreContext";
 
 const AdminDeleteProduct = () => {
   const { products, loading, deleteProduct } = useProductStoreContext();

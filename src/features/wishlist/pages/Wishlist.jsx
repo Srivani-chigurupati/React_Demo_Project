@@ -1,6 +1,6 @@
 import React from "react";
-import ProductGrid from "../Components/ProductGrid";
-import useProductStoreContext from "../hooks/useProductStoreContext";
+import ProductGrid from "../../catalog/components/ProductGrid";
+import useProductStoreContext from "../../catalog/hooks/useProductStoreContext";
 
 const Wishlist = () => {
   const {

@@ -1,6 +1,6 @@
 import React from "react";
-import ProductGrid from "../Components/ProductGrid";
-import ProductFilters from "../Components/ProductFilters";
+import ProductGrid from "../components/ProductGrid";
+import ProductFilters from "../components/ProductFilters";
 import useProductStoreContext from "../hooks/useProductStoreContext";
 
 const Products = () => {

@@ -6,27 +6,31 @@ import {
   Outlet,
   RouterProvider,
 } from "react-router-dom";
-import Footer from "./Components/Footer";
-import Navbar from "./Components/Navbar";
-import NotFound from "./Pages/NotFound";
-import Checkout from "./Pages/Checkout";
-import Home from "./Pages/Home";
-import Login from "./Pages/Login";
-import Products from "./Pages/Products";
+import Footer from "../shared/components/Footer";
+import Navbar from "../shared/components/Navbar";
+import NotFound from "./pages/NotFound";
+import Checkout from "../features/checkout/pages/Checkout";
+import Home from "../features/catalog/pages/Home";
+import Login from "../features/auth/pages/Login";
+import Products from "../features/catalog/pages/Products";
 import ProductLayout from "./layouts/ProductLayout";
-import { ProductStoreProvider } from "./contexts/ProductStoreContext";
-import ProtectedRoutes from "./layouts/ProtectedRoutes";
+import { ProductStoreProvider } from "../features/catalog/contexts/ProductStoreContext";
+import ProtectedRoutes from "../features/auth/ProtectedRoutes";
 
-const Cart = lazy(() => import("./Pages/Cart"));
-const ProductDetails = lazy(() => import("./Pages/ProductDetails"));
-const Wishlist = lazy(() => import("./Pages/Wishlist"));
-const AdminLayout = lazy(() => import("./layouts/AdminLayout"));
-const AdminAddProduct = lazy(() => import("./pages/Admin/AdminAddProduct"));
+const Cart = lazy(() => import("../features/cart/pages/Cart"));
+const ProductDetails = lazy(
+  () => import("../features/catalog/pages/ProductDetails"),
+);
+const Wishlist = lazy(() => import("../features/wishlist/pages/Wishlist"));
+const AdminLayout = lazy(() => import("../features/admin/AdminLayout"));
+const AdminAddProduct = lazy(
+  () => import("../features/admin/pages/AdminAddProduct"),
+);
 const AdminUpdateProduct = lazy(
-  () => import("./pages/Admin/AdminUpdateProduct"),
+  () => import("../features/admin/pages/AdminUpdateProduct"),
 );
 const AdminDeleteProduct = lazy(
-  () => import("./pages/Admin/AdminDeleteProduct"),
+  () => import("../features/admin/pages/AdminDeleteProduct"),
 );
 
 function Layout() {

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AdminProductForm from "../../components/Admin/AdminProductForm";
-import AdminProductList from "../../components/Admin/AdminProductList";
-import useProductStoreContext from "../../hooks/useProductStoreContext";
+import AdminProductForm from "../components/AdminProductForm";
+import AdminProductList from "../components/AdminProductList";
+import useProductStoreContext from "../../catalog/hooks/useProductStoreContext";
 
 const AdminUpdateProduct = () => {
   const { products, loading, updateProduct } = useProductStoreContext();

@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { useProductStore } from "../hooks/useProductStore";
-import Toaster from "../Components/Toaster";
+import Toaster from "../../../shared/components/Toaster";
 
 const ProductStoreContext = createContext(undefined);
 

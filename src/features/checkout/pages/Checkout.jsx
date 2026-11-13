@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import useProductStoreContext from "../hooks/useProductStoreContext";
+import useProductStoreContext from "../../catalog/hooks/useProductStoreContext";
 import "./Checkout.css";
 
 const Checkout = () => {

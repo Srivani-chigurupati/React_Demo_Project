@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ProductGrid from "../Components/ProductGrid";
+import ProductGrid from "../components/ProductGrid";
 import useProductStoreContext from "../hooks/useProductStoreContext";
 import "./Home.css";
 

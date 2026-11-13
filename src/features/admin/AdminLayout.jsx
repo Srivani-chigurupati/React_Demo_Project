@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
-import useProductStoreContext from "../hooks/useProductStoreContext";
+import useProductStoreContext from "../catalog/hooks/useProductStoreContext";
 
 const adminLinks = [
   { to: "/admin/products/add", label: "Add product" },

@@ -76,7 +76,11 @@ function App() {
         },
         {
           path: "admin",
-          element: <AdminLayout />,
+          element: (
+            <ProtectedRoutes requiredRole="admin">
+              <AdminLayout />
+            </ProtectedRoutes>
+          ),
           children: [
             {
               index: true,

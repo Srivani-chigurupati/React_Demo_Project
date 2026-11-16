@@ -36,6 +36,7 @@ const Login = () => {
       //setIsLoggedIn(true);
       setUser({
         id: user.id,
+        role: user.role,
         firstName: user.firstName,
         lastName: user.lastName,
         username: user.username,

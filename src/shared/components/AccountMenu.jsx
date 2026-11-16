@@ -128,9 +128,11 @@ const AccountMenu = () => {
                   <Link to="/orders" onClick={() => setIsOpen(false)}>
                     Your orders
                   </Link>
-                  <Link to="/admin" onClick={() => setIsOpen(false)}>
-                    Admin panel
-                  </Link>
+                  {user?.role === "admin" && (
+                    <Link to="/admin" onClick={() => setIsOpen(false)}>
+                      Admin panel
+                    </Link>
+                  )}
                 </section>
                 <section className="Nav-account-orders-section">
                   <h3>Your recent orders</h3>

@@ -2,6 +2,40 @@ import { useEffect, useState } from "react";
 import getProducts from "../services/ProductService";
 
 const PRODUCTS_STORAGE_KEY = "my-demo-app-products-v1";
+const ORDERS_STORAGE_KEY = "my-demo-app-orders-v1";
+
+const isOrderList = (value) =>
+  Array.isArray(value) &&
+  value.every(
+    (order) =>
+      order &&
+      typeof order.id === "string" &&
+      typeof order.userId === "number" &&
+      typeof order.placedAt === "string" &&
+      Array.isArray(order.items) &&
+      typeof order.total === "number",
+  );
+
+const readSavedOrders = () => {
+  try {
+    const savedOrders = localStorage.getItem(ORDERS_STORAGE_KEY);
+    if (savedOrders === null) {
+      return { orders: [], error: "" };
+    }
+
+    const parsedOrders = JSON.parse(savedOrders);
+    if (!isOrderList(parsedOrders)) {
+      throw new Error("Saved order data is invalid.");
+    }
+    return { orders: parsedOrders, error: "" };
+  } catch (err) {
+    return {
+      orders: [],
+      error:
+        err instanceof Error ? err.message : "Could not load saved orders.",
+    };
+  }
+};
 
 const isProductList = (value) =>
   Array.isArray(value) &&
@@ -19,6 +53,9 @@ export const useProductStore = () => {
   const [products, setProducts] = useState([]);
   const [wishlist, setWishlist] = useState([]);
   const [cart, setCart] = useState([]);
+  const [initialOrders] = useState(readSavedOrders);
+  const [orders, setOrders] = useState(initialOrders.orders);
+  const [ordersError, setOrdersError] = useState(initialOrders.error);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [toastMessage, setToastMessage] = useState("");
@@ -206,10 +243,68 @@ export const useProductStore = () => {
     );
   };
 
+  const placeOrder = ({ customer, shippingAddress, paymentMethod }) => {
+    if (ordersError) {
+      throw new Error(
+        `Cannot place an order because saved orders could not be loaded: ${ordersError}`,
+      );
+    }
+    if (cart.length === 0) {
+      throw new Error("Your cart is empty.");
+    }
+
+    const items = cart.map((product) => {
+      const quantity = product.quantity || 1;
+      const unitPrice =
+        Math.round(
+          product.price * (1 - (product.discountPercentage || 0) / 100) * 100,
+        ) / 100;
+
+      return {
+        productId: product.id,
+        title: product.title,
+        image: product.images?.[0] || product.thumbnail || "",
+        quantity,
+        unitPrice,
+        lineTotal: Math.round(unitPrice * quantity * 100) / 100,
+      };
+    });
+    const total = Math.round(
+      items.reduce((sum, item) => sum + item.lineTotal, 0) * 100,
+    ) / 100;
+    const order = {
+      id: `ORD-${Date.now()}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`,
+      userId: customer.id,
+      customer: {
+        name: customer.name,
+        email: customer.email,
+        phone: customer.phone,
+      },
+      shippingAddress: { ...shippingAddress },
+      paymentMethod,
+      items,
+      subtotal: total,
+      shipping: 0,
+      total,
+      status: "Placed",
+      placedAt: new Date().toISOString(),
+    };
+    const nextOrders = [order, ...orders];
+
+    localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(nextOrders));
+    setOrders(nextOrders);
+    setOrdersError("");
+    setCart([]);
+    setToastMessage(`Order ${order.id} placed`);
+    return order;
+  };
+
   return {
     products,
     wishlist,
     cart,
+    orders,
+    ordersError,
     loading,
     error,
     toastMessage,
@@ -218,6 +313,7 @@ export const useProductStore = () => {
     removeFromCart,
     incrementCartQuantity,
     decrementCartQuantity,
+    placeOrder,
     addProduct,
     updateProduct,
     deleteProduct,

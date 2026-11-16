@@ -42,8 +42,16 @@ const Login = () => {
         email: user.email,
         phone: user.phone,
         image: user.image,
+        address: {
+          address: user.address?.address || "",
+          city: user.address?.city || "",
+          state: user.address?.state || "",
+          postalCode: user.address?.postalCode || "",
+          country: user.address?.country || "",
+        },
       });
-      navigate(location.state?.from?.pathname || "/", { replace: true });
+      navigate("/", { replace: true });
+      //navigate(location.state?.from?.pathname || "/", { replace: true });
     } catch (err) {
       setError(
         err instanceof Error

@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../features/auth/hooks/useAuth";
+import useProductStoreContext from "../../features/catalog/hooks/useProductStoreContext";
 import "./AccountMenu.css";
 
 const AccountMenu = () => {
   const { user, setUser, isLoggedIn } = useAuth();
+  const { orders, ordersError } = useProductStoreContext();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
@@ -15,6 +17,9 @@ const AccountMenu = () => {
     .map((name) => name[0])
     .join("")
     .toUpperCase();
+  const userOrders = orders
+    .filter((order) => order.userId === user?.id)
+    .slice(0, 3);
 
   useEffect(() => {
     if (!isOpen) {
@@ -115,17 +120,50 @@ const AccountMenu = () => {
                   <p>{user?.email || "No email available"}</p>
                   <p>{user?.phone || "No phone number available"}</p>
                 </section>
-                <section>
-                  <h3>Your lists &amp; orders</h3>
+                <section className="Nav-account-lists">
+                  <h3>Your lists</h3>
                   <Link to="/wishlist" onClick={() => setIsOpen(false)}>
                     Your wishlist
+                  </Link>
+                  <Link to="/orders" onClick={() => setIsOpen(false)}>
+                    Your orders
                   </Link>
                   <Link to="/admin" onClick={() => setIsOpen(false)}>
                     Admin panel
                   </Link>
-                  <p className="Nav-account-orders">
-                    Order history is not available yet
-                  </p>
+                </section>
+                <section className="Nav-account-orders-section">
+                  <h3>Your recent orders</h3>
+                  {ordersError ? (
+                    <p className="Nav-account-orders" role="alert">
+                      Orders could not be loaded.
+                    </p>
+                  ) : userOrders.length > 0 ? (
+                    <ul className="Nav-account-orders-list">
+                      {userOrders.map((order) => (
+                        <li key={order.id}>
+                          <Link
+                            to={`/order-placed/${encodeURIComponent(order.id)}`}
+                            onClick={() => setIsOpen(false)}
+                          >
+                            <span>{order.id}</span>
+                            <span>
+                              {new Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                              }).format(order.total)}
+                            </span>
+                          </Link>
+                          <small>
+                            {new Date(order.placedAt).toLocaleDateString()} ·{" "}
+                            {order.status}
+                          </small>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="Nav-account-orders">No orders yet.</p>
+                  )}
                 </section>
               </div>
               <footer className="Nav-account-footer">

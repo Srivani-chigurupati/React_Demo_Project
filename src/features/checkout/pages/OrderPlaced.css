@@ -1,0 +1,46 @@
+.order-placed-page {
+  max-width: 800px;
+}
+
+.order-placed-confirmation {
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+}
+
+.order-placed-success-mark {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  margin: 0 0 16px;
+  border-radius: 50%;
+  background: #e5f5e9;
+  color: #237a3b;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.order-placed-id {
+  overflow-wrap: anywhere;
+}
+
+.order-placed-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.order-placed-total {
+  margin-top: 16px;
+  text-align: right;
+  font-size: 18px;
+}
+
+.order-placed-note {
+  color: var(--text);
+  font-size: 14px;
+}

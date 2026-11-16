@@ -106,7 +106,8 @@
   border-left: 1px solid #e8e5eb;
 }
 
-.Nav-account-sections > section:last-child {
+.Nav-account-sections > .Nav-account-lists,
+.Nav-account-sections > .Nav-account-orders-section {
   grid-column: 1 / -1;
   border-top: 1px solid #e8e5eb;
   border-left: 0;
@@ -139,6 +140,26 @@
   margin-top: 8px;
   color: #706a76;
   font-size: 13px;
+}
+
+.Nav-account-orders-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.Nav-account-orders-list li > a {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+  font-weight: 600;
+}
+
+.Nav-account-orders-list small {
+  color: #706a76;
 }
 
 .Nav-account-footer {
@@ -211,7 +232,8 @@
     border-left: 0;
   }
 
-  .Nav-account-sections > section:last-child {
+  .Nav-account-sections > .Nav-account-lists,
+  .Nav-account-sections > .Nav-account-orders-section {
     grid-column: auto;
   }
 }

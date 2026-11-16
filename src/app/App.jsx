@@ -18,6 +18,10 @@ import { ProductStoreProvider } from "../features/catalog/contexts/ProductStoreC
 import ProtectedRoutes from "../features/auth/ProtectedRoutes";
 
 const Cart = lazy(() => import("../features/cart/pages/Cart"));
+const OrderPlaced = lazy(
+  () => import("../features/checkout/pages/OrderPlaced"),
+);
+const Orders = lazy(() => import("../features/checkout/pages/Orders"));
 const ProductDetails = lazy(
   () => import("../features/catalog/pages/ProductDetails"),
 );
@@ -65,6 +69,8 @@ function App() {
             { path: "product-details/:id", element: <ProductDetails /> },
             { path: "cart", element: <Cart /> },
             { path: "checkout", element: <Checkout /> },
+            { path: "order-placed/:orderId", element: <OrderPlaced /> },
+            { path: "orders", element: <Orders /> },
             { path: "wishlist", element: <Wishlist /> },
           ],
         },

@@ -68,10 +68,6 @@
   min-width: 0;
 }
 
-.Nav-logout {
-  margin-left: 0;
-}
-
 @media (max-width: 640px) {
   .Nav-search {
     order: 1;

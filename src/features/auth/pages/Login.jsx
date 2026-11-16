@@ -10,7 +10,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { setIsLoggedIn } = useAuth();
+  const { setUser } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -33,7 +33,16 @@ const Login = () => {
         return;
       }
 
-      setIsLoggedIn(true);
+      //setIsLoggedIn(true);
+      setUser({
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
+        email: user.email,
+        phone: user.phone,
+        image: user.image,
+      });
       navigate(location.state?.from?.pathname || "/", { replace: true });
     } catch (err) {
       setError(
@@ -90,7 +99,11 @@ const Login = () => {
             {error}
           </p>
         )}
-        <button className="login-submit btn btn-primary" type="submit" disabled={isSubmitting}>
+        <button
+          className="login-submit btn btn-primary"
+          type="submit"
+          disabled={isSubmitting}
+        >
           {isSubmitting ? "Signing in..." : "Submit"}
         </button>
       </form>

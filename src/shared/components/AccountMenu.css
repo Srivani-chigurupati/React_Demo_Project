@@ -1,0 +1,217 @@
+.Nav-account {
+  position: relative;
+}
+
+.Nav-account-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+}
+
+.Nav-account-avatar {
+  position: relative;
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid #c9c4cf;
+  border-radius: 50%;
+  background: #ebe4f2;
+  color: #532078;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.Nav-account-avatar img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.Nav-account-label {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.Nav-account-label > span {
+  font-size: 12px;
+}
+
+.Nav-account-label strong {
+  font-size: 14px;
+}
+
+.Nav-account-chevron {
+  font-size: 12px;
+}
+
+.Nav-account-menu {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 10px);
+  right: 0;
+  width: min(440px, calc(100vw - 24px));
+  overflow: hidden;
+  border: 1px solid #dedbe2;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgb(34 24 44 / 18%);
+  color: #302b35;
+}
+
+.Nav-account-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e8e5eb;
+}
+
+.Nav-account-avatar-large {
+  width: 48px;
+  height: 48px;
+  flex-basis: 48px;
+  font-size: 16px;
+}
+
+.Nav-account-profile h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.Nav-account-profile p {
+  margin: 3px 0 0;
+  color: #706a76;
+  font-size: 13px;
+}
+
+.Nav-account-sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.Nav-account-sections > section {
+  min-width: 0;
+  padding: 16px 20px;
+}
+
+.Nav-account-sections > section + section {
+  border-left: 1px solid #e8e5eb;
+}
+
+.Nav-account-sections > section:last-child {
+  grid-column: 1 / -1;
+  border-top: 1px solid #e8e5eb;
+  border-left: 0;
+}
+
+.Nav-account-sections h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+.Nav-account-sections p,
+.Nav-account-sections a {
+  display: block;
+  overflow-wrap: anywhere;
+  margin: 0 0 6px;
+  color: #514b56;
+  font-size: 14px;
+}
+
+.Nav-account-sections a {
+  color: #6b2b99;
+  text-decoration: none;
+}
+
+.Nav-account-sections a:hover {
+  text-decoration: underline;
+}
+
+.Nav-account-sections .Nav-account-orders {
+  margin-top: 8px;
+  color: #706a76;
+  font-size: 13px;
+}
+
+.Nav-account-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 16px;
+  border-top: 1px solid #e8e5eb;
+  background: #faf9fb;
+}
+
+.Nav-account-footer button {
+  padding: 6px 12px;
+  border: 1px solid #d6d1da;
+  border-radius: 5px;
+  background: #fff;
+  color: #403947;
+  font: inherit;
+  cursor: pointer;
+}
+
+.Nav-account-footer button:hover {
+  background: #f3eff6;
+}
+
+.Nav-account-signed-out {
+  padding: 18px;
+  text-align: center;
+}
+
+.Nav-account-signed-out p {
+  margin: 0 0 14px;
+  color: #514b56;
+}
+
+.Nav-signin-button {
+  display: block;
+  padding: 9px 14px;
+  border: 1px solid #e2bd12;
+  border-radius: 6px;
+  background: #ffd814;
+  color: #26220e;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.Nav-signin-button:hover {
+  background: #f7ca00;
+  color: #26220e;
+}
+
+@media (max-width: 640px) {
+  .Nav-account-menu {
+    position: fixed;
+    top: 72px;
+    right: 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .Nav-account-label > span {
+    display: none;
+  }
+
+  .Nav-account-sections {
+    grid-template-columns: 1fr;
+  }
+
+  .Nav-account-sections > section + section {
+    border-top: 1px solid #e8e5eb;
+    border-left: 0;
+  }
+
+  .Nav-account-sections > section:last-child {
+    grid-column: auto;
+  }
+}

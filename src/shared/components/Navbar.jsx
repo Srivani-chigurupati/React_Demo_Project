@@ -1,22 +1,15 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Navbar.css";
-import useAuth from "../../features/auth/hooks/useAuth";
 import useProductStoreContext from "../../features/catalog/hooks/useProductStoreContext";
 import ProductSearch from "../../features/catalog/components/ProductSearch";
+import AccountMenu from "./AccountMenu";
 
 const Navbar = () => {
-  const { isLoggedIn, setIsLoggedIn } = useAuth();
   const { cart } = useProductStoreContext();
-  const navigate = useNavigate();
   const cartItemCount = cart.reduce(
     (count, item) => count + (item.quantity || 1),
     0,
   );
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    navigate("/login", { replace: true });
-  };
 
   return (
     <header className="Navbar navbar navbar-expand bg-light border-bottom px-3 px-md-4 gap-2">
@@ -52,21 +45,7 @@ const Navbar = () => {
           {cartItemCount}
         </span>
       </Link>
-      <Link to="/wishlist" className="Nav-link Nav-wishlist">
-        WishList
-      </Link>
-      <Link to="/admin" className="Nav-link">
-        Admin
-      </Link>
-      {isLoggedIn && (
-        <button
-          className="Nav-link Nav-logout btn btn-outline-secondary btn-sm"
-          type="button"
-          onClick={handleLogout}
-        >
-          Logout
-        </button>
-      )}
+      <AccountMenu />
     </header>
   );
 };

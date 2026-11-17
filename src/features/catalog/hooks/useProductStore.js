@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import useAuth from "../../auth/hooks/useAuth";
 import getProducts from "../services/ProductService";
 
 const PRODUCTS_STORAGE_KEY = "my-demo-app-products-v1";
 const ORDERS_STORAGE_KEY = "my-demo-app-orders-v1";
+const WISHLIST_STORAGE_KEY = "my-demo-app-wishlist-v1";
+const CART_STORAGE_KEY = "my-demo-app-cart-v1";
 
 const isOrderList = (value) =>
   Array.isArray(value) &&
@@ -49,10 +52,75 @@ const isProductList = (value) =>
       Array.isArray(product.images),
   );
 
+const readSavedWishlist = (storageKey) => {
+  if (!storageKey) {
+    return { wishlist: [], error: "" };
+  }
+
+  try {
+    const savedWishlist = localStorage.getItem(storageKey);
+    if (savedWishlist === null) {
+      return { wishlist: [], error: "" };
+    }
+
+    const parsedWishlist = JSON.parse(savedWishlist);
+    if (!isProductList(parsedWishlist)) {
+      throw new Error("Saved wishlist data is invalid.");
+    }
+    return { wishlist: parsedWishlist, error: "" };
+  } catch (err) {
+    return {
+      wishlist: [],
+      error:
+        err instanceof Error ? err.message : "Could not load saved wishlist.",
+    };
+  }
+};
+
+const readSavedCartlist = (storageKey) => {
+  if (!storageKey) {
+    return { cartlist: [], error: "" };
+  }
+
+  try {
+    const savedCartlist = localStorage.getItem(storageKey);
+    if (savedCartlist === null) {
+      return { cartlist: [], error: "" };
+    }
+
+    const parsedCartlist = JSON.parse(savedCartlist);
+    if (!isProductList(parsedCartlist)) {
+      throw new Error("Saved Cart data is invalid.");
+    }
+    return { cartlist: parsedCartlist, error: "" };
+  } catch (err) {
+    return {
+      cartlist: [],
+      error:
+        err instanceof Error ? err.message : "Could not load saved cartlist.",
+    };
+  }
+};
+
 export const useProductStore = () => {
+  const { user } = useAuth();
+  const wishlistStorageKey =
+    user?.id != null
+      ? `${WISHLIST_STORAGE_KEY}-user-${user.id}`
+      : null;
+  const cartStorageKey =
+    user?.id != null ? `${CART_STORAGE_KEY}-user-${user.id}` : null;
   const [products, setProducts] = useState([]);
-  const [wishlist, setWishlist] = useState([]);
-  const [cart, setCart] = useState([]);
+  const [initialWishlist] = useState(() =>
+    readSavedWishlist(wishlistStorageKey),
+  );
+  const [initialCartlist] = useState(() => readSavedCartlist(cartStorageKey));
+  const [wishlist, setWishlist] = useState(initialWishlist.wishlist);
+  const [wishlistError, setWishlistError] = useState(initialWishlist.error);
+  const [cartlistError, setCartlistError] = useState(initialCartlist.error);
+  const [cart, setCart] = useState(initialCartlist.cartlist);
+  const persistedWishlist = useRef(wishlist);
+  const persistedCartlist = useRef(cart);
   const [initialOrders] = useState(readSavedOrders);
   const [orders, setOrders] = useState(initialOrders.orders);
   const [ordersError, setOrdersError] = useState(initialOrders.error);
@@ -68,6 +136,38 @@ export const useProductStore = () => {
     const timeoutId = setTimeout(() => setToastMessage(""), 3000);
     return () => clearTimeout(timeoutId);
   }, [toastMessage]);
+
+  useEffect(() => {
+    if (!wishlistStorageKey || persistedWishlist.current === wishlist) {
+      return;
+    }
+
+    try {
+      localStorage.setItem(wishlistStorageKey, JSON.stringify(wishlist));
+      persistedWishlist.current = wishlist;
+      setWishlistError("");
+    } catch (err) {
+      setWishlistError(
+        err instanceof Error ? err.message : "Could not save wishlist.",
+      );
+    }
+  }, [wishlist, wishlistStorageKey]);
+
+  useEffect(() => {
+    if (!cartStorageKey || persistedCartlist.current === cart) {
+      return;
+    }
+
+    try {
+      localStorage.setItem(cartStorageKey, JSON.stringify(cart));
+      persistedCartlist.current = cart;
+      setCartlistError("");
+    } catch (err) {
+      setCartlistError(
+        err instanceof Error ? err.message : "Could not save cartlist.",
+      );
+    }
+  }, [cart, cartStorageKey]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -269,9 +369,9 @@ export const useProductStore = () => {
         lineTotal: Math.round(unitPrice * quantity * 100) / 100,
       };
     });
-    const total = Math.round(
-      items.reduce((sum, item) => sum + item.lineTotal, 0) * 100,
-    ) / 100;
+    const total =
+      Math.round(items.reduce((sum, item) => sum + item.lineTotal, 0) * 100) /
+      100;
     const order = {
       id: `ORD-${Date.now()}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`,
       userId: customer.id,
@@ -302,7 +402,9 @@ export const useProductStore = () => {
   return {
     products,
     wishlist,
+    wishlistError,
     cart,
+    cartlistError,
     orders,
     ordersError,
     loading,

@@ -8,6 +8,7 @@ const Cart = () => {
   const {
     cart,
     wishlist,
+    cartlistError,
     toggleWishlist,
     removeFromCart,
     incrementCartQuantity,
@@ -25,6 +26,11 @@ const Cart = () => {
   return (
     <main className="container py-4">
       <h1 className="mb-4">Cart</h1>
+      {cartlistError && (
+        <p className="alert alert-danger" role="alert">
+          Cartlist storage error: {cartlistError}
+        </p>
+      )}
       {cart.length === 0 ? (
         <p className="alert alert-secondary">Your cart is empty.</p>
       ) : (

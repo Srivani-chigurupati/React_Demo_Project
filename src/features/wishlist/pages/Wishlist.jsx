@@ -6,6 +6,7 @@ const Wishlist = () => {
   const {
     cart,
     wishlist,
+    wishlistError,
     toggleWishlist,
     addToCart,
     removeFromCart,
@@ -16,6 +17,11 @@ const Wishlist = () => {
   return (
     <main className="container py-4">
       <h1 className="mb-4">Wishlist</h1>
+      {wishlistError && (
+        <p className="alert alert-danger" role="alert">
+          Wishlist storage error: {wishlistError}
+        </p>
+      )}
       {wishlist.length === 0 ? (
         <p className="alert alert-secondary">Your wishlist is empty.</p>
       ) : (
